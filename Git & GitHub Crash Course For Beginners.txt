@@ -1,0 +1,684 @@
+Git & GitHub Crash Course For Beginners
+1,607,170 views
+•5 Feb 2017
+
+In this Git tutorial we will talk about what exactly Git is and we will look at and work with all of the basic and most important commands such as add, commit, status, push and more. 
+
+This tutorial is very beginner friendly.
+
+(Comments: For people watching this in 2019 - Github allows you to have multiple free private repositories since the mid of Jan.)
+
+Git = Version Control System (VCS) for tracking changes in computer files.
+
+			Distributed Control Versions
+			Coordinated work between multiple developers on many different networks
+			Who made changes to what & when - complete tracking
+			Revert back at any time
+			Local & Remote Repositories. Don't need internet connection to work on a local repository, but you will to push it to a remote repository.			
+
+Git - created by Linus Torvals in 2005.
+
+Concepts:
+	
+			Keeps track of your code history.
+			Takes snapshots of your files.
+			You decide when to take a snapshot by making a 'commit'
+			You can visit any snapshot at any time.
+			You can stage files before committing.
+
+Basic Commands:
+
+$ git init			//initializes the Local Git Repository - creates a .git folder in the project folder, hidden by default. You don't need to go into this directly
+
+$ git add <file>	//Adds File(s) to Index (as often & as many as you want) which sets them up in the staging area
+
+$ git status	 	//Check the status of a Working Tree - to see what's in the staging area
+
+$ git commit		//Takes everything in the Index/Staging Area and copies it to the Local Repository
+
+Remote Repositories: GitHub or BitBucket - these next commands work for Remote
+
+$ git push			//Takes contents of the local repository and copies it to the Remote Repository. Credentials needed or use SSH.
+
+$ git pull			//Copies down the latest version/changes on the Remote to Local
+
+$ git clone			//Clone the Repository into a new directory
+
+
+Installing Git	-	Site will include Direct Downloads and/or Instructions.
+--------------
+https://git-scm.com/
+
+https://git-scm.com/downloads
+
+Brad recommends commandline over GUI, to know how it works. 
+Default settings on the install except for Adjusting Path - 'use Git and optional Unix tools for the Windows command line'bottom optional
+
+Start --> Git --> Git Bash					By default it opens in 		C:\Users\Lenovo		directory
+
+Another option for opening is to create a desktop folder i.e. 'GitTestFolder'
+Then Right-Click --> 'Git Bash Here' --> Git Bash Commandline Window opens
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder
+	$
+
+Ctrl-Scroll - up and down will make the text larger or smaller
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder
+	$ git --version
+	git version 2.25.0.windows.1
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder
+	$
+
+
+Open the folder in File Explorer so you can see files being created or deleted. You can open them up with your Editor - Brad uses Atom, I'll use Notepad++
+
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder			
+	$ touch index.html														I see the file created in the folder
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder
+	$ touch app.js															I see the file created in the folder
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder
+	$
+
+Use editor to create content in the index.html file.
+
+	<html>
+		<head>
+			<title>Brad's Git Example File</title>
+		</head>
+		<body>
+			<h2>Brad's Git App Sample File</h2>
+		</body>
+	</html>
+
+Save & go back to the Bash windows and initialize the new Git Repository
+
+Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder
+$ git init
+Initialized empty Git repository in C:/Users/Lenovo/Desktop/GitTestFolder/.git/
+
+Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+$
+
+This creates a new .git folder in the C:\Users\Lenovo\Desktop\GitTestFolder 
+
+If you're not seeing the new folder, your File Explorer may not have 'Show Hidden Folders' enabled (Default = Not)
+--> View --> Options --> Change Folder Search Options --> View Tab -> (O) Show hidden files, folders or drives
+																		  Unhide Extensions
+																		  
+Now we can use Git Commands.
+
+Brad recommend setting up name & email address, but I already have them setup
+
+			Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+			$ git config --list
+			diff.astextplain.textconv=astextplain
+			filter.lfs.clean=git-lfs clean -- %f
+			filter.lfs.smudge=git-lfs smudge -- %f
+			filter.lfs.process=git-lfs filter-process
+			filter.lfs.required=true
+			http.sslbackend=openssl
+			http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+			core.autocrlf=true
+			core.fscache=true
+			core.symlinks=false
+			credential.helper=manager
+			user.name=Paul Mc Nicholas
+			user.email=mcnicholaspaul461@gmail.com
+			core.editor=notepad
+			core.repositoryformatversion=0
+			core.filemode=false
+			core.bare=false
+			core.logallrefupdates=true
+			core.symlinks=false
+			core.ignorecase=true
+
+If I needed to set them up, you do it as follows:
+
+			$ git config --global user.name 'Paul Mc Nicholas'
+			
+			
+			$ git config --global user.email 'mcnicholaspaul461@gmail'
+
+Adding our 'index.html' file to the our new repository
+
+			£ git add index.html
+			
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git add index.html
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$
+			
+To check what is in the staging area --> $ git status
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git status
+	On branch master
+
+	No commits yet
+
+	Changes to be committed:
+	  (use "git rm --cached <file>..." to unstage)
+			new file:   index.html
+
+	Untracked files:
+	  (use "git add <file>..." to include in what will be committed)
+			app.js
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$
+
+To remove a file from the staging area --> $ git rm --cached index.html
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git rm --cached index.html
+	rm 'index.html'
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git status
+	On branch master
+
+	No commits yet
+
+	Untracked files:
+	  (use "git add <file>..." to include in what will be committed)
+			app.js
+			index.html
+
+	nothing added to commit but untracked files present (use "git add" to track)
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$
+
+Other syntax for adding files
+
+	$ git *.html
+	$ git add .						. = all files in this directory
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git add .
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git status
+	On branch master
+
+	No commits yet
+
+	Changes to be committed:
+	  (use "git rm --cached <file>..." to unstage)
+			new file:   app.js
+			new file:   index.html
+
+
+Now if we make a change to the index.html file in the editor (not the one in the repository) and then check our status again, it will check if files were changed and the repository file needs to be updated
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git status
+	On branch master
+
+	No commits yet
+
+	Changes to be committed:
+	  (use "git rm --cached <file>..." to unstage)
+			new file:   app.js																(Green)	
+			new file:   index.html															(Green)
+
+	Changes not staged for commit:
+	  (use "git add <file>..." to update what will be committed)
+	  (use "git restore <file>..." to discard changes in working directory)
+			modified:   index.html															(Red)
+
+
+	$ git add .
+	$ git status																			(only green)
+	
+Git Commit
+==========
+Edit Stage Included
+-------------------
+	$ git commit --> Vim Editor --> i (insert mode) --> make changes --> # = comments
+	
+					--> ESC (exit insert mode) --> :wq (Write & Quit) <Enter> --> File changes noted.
+
+In my case - I had Editor set to Notepad, so it opened Notepad, I uncommented # the same line 'Initial commit', saved and exited which then displayed the following - matching what Brad saw on his machine
+
+		Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+		$ git commit
+		hint: Waiting for your editor to close the file... unix2dos: converting file C:/Users/Lenovo/Desktop/GitTestFolder/.git/COMMIT_EDITMSG to DOS format...
+		dos2unix: converting file C:/Users/Lenovo/Desktop/GitTestFolder/.git/COMMIT_EDITMSG to Unix format...
+		[master (root-commit) 516bd2b] Initial commit
+		 2 files changed, 13 insertions(+)
+		 create mode 100644 app.js
+		 create mode 100644 index.html
+
+					
+	
+Edit the app.js file
+--------------------
+	Add							console.log('Hello');			-->		Save & Exit
+	
+	
+Edit Stage Excluded
+-------------------
+	$ git commit -m 'Changed app.js'	<Enter>						This bypasses the editor option
+																	by including your own comment on what's happening
+																	
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git status
+	On branch master
+	Changes not staged for commit:
+	  (use "git add <file>..." to update what will be committed)
+	  (use "git restore <file>..." to discard changes in working directory)
+			modified:   app.js
+
+	no changes added to commit (use "git add" and/or "git commit -a")
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git add .
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git commit -m 'Changed the app.js file'
+	[master 858ecd7] Changed the app.js file
+	 1 file changed, 1 insertion(+), 1 deletion(-)
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$
+																	
+Git Ignore - .gitignore
+-----------------------
+List the files you don't want to include in your 'git all' commands
+
+	.gitignore						just a text file - add the list of files or folders to be ignored when staging
+
+Added 2 new directories in the GitTestFolder - Dir1 & Dir2, and added an appX.js file to each
+
+Added /dir2 to the .gitignore file --> $ git add .
+
+			Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+			$ git add .
+
+			Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+			$ git status
+			On branch master
+			Changes to be committed:
+			  (use "git restore --staged <file>..." to unstage)
+					new file:   .gitignore
+					new file:   Dir1/app1.js
+
+Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+
+So, as asked for - Dir2 was ignored - not case sensitive
+
+Other options include *.txt or *.html - same as normal Dos commands
+
+
+Commit Changes before Branching
+-------------------------------
+
+	$ git commit -m 'committing changes before branching'
+	
+Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+$ git commit -m 'committing changes before branching								<Enter>
+> '																					forgot the last ' so it waited
+[master fb81bb2] committing changes before branching
+ 2 files changed, 3 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 Dir1/app1.js
+
+Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+$
+	
+
+Branches
+---------
+
+If your a developer working on a project with a lot of other developers and you're working on a login system. You don't want your changes pushed to the bigger project until you've finished your section, so you could create a branch called 'login'. You can work on that branch and keep committing your changes to that branch until you're happy with the finished product and want to submit it to the master.
+
+To create a branch:
+
+	$ git branch login																create the branch
+	
+	$ git checkout login
+	
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git branch login
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git checkout login
+	Switched to branch 'login'
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (login)
+	$
+	
+Create a new file in the login branch - call the file 'login.html'
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (login)
+	$ touch login.html
+
+Edited the login.html file in Notepad++
+
+			<html>
+				<head>
+					<title>Login Git Example File</title>
+				</head>
+				<body>
+					<div align=center>
+						<h2>Brad's Git Login Branch - Login Sample File</h2>
+						<h4></h4>
+						<h5></h5>
+					</div>
+				</body>
+			</html>
+			
+	I also added a new <h4>...</h4> line to 'index.html' - added to the login branch version of the file.
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (login)
+	$ git add .																		Staging
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (login)					Error!!
+	$ git comit -m 'Login Form'
+	git: 'comit' is not a git command. See 'git --help'.
+
+	The most similar command is
+			commit
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (login)
+	$ git commit -m 'Login Form'													Commit
+	[login 27735ea] Login Form
+	 2 files changed, 14 insertions(+)
+	 create mode 100644 login.html
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (login)
+	$
+
+Changing between Branches
+-------------------------
+Brad is using Atom Editor --> Project Folder so changing between 'master' & 'login' seems to make a difference between the files he can or sees open. 
+
+Notepad++ doesn't have the same settings, and whether I'm in master or login, the login.html file is open in the editor too. 
+
+In the Git Bash - being in 'master' or 'login' decides what files you see - as shown below:
+
+				Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (login)
+				$ git checkout master
+				Switched to branch 'master'
+
+				Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+				$ ls
+				app.js  Dir1/  Dir2/  index.html  log.txt							3 files
+				
+	Notepad++ - after I switch to master, if I select 'login.html' it tells me the file no longer exists, do I want to keep it open in the editor - I say [ No ], so it disappears.
+	
+	Notepad++ - if I select 'index.html', the editor tells me the file as been modified and do I want to refresh - [ Yes ] --> The <h4>...</h4> line I added to the login branch of the file disappears.
+
+				Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+				$ git checkout login
+				Switched to branch 'login'
+
+				Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (login)
+				$ ls
+				app.js  Dir1/  Dir2/  index.html  log.txt  login.html				4 files
+
+				Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (login)
+				$
+Having to do this manually for these files leads me to believe that I should be using Atom too or VSC
+
+Starting from Scratch	-	Comparing Editors and Functionality
+---------------------		-----------------------------------
+1. Right-Click on the 'GitTestFolder' --> Git Bash			(which is what you see above)
+
+2. VSC --> Open Folder --> C:\Users\Lenovo\Desktop\GitTestFolder (Desktop Folder: GitTestFolder)
+
+3. Notepad++ --> File --> Open Folder as Workspace --> Browse --> Desktop --> GitTestFolder. This opens a LHS Explorer Window showing the files in the folder.
+
+3. Also opened File Explorer to the same folder to see what happens as I do the following in Git Bash
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git checkout login
+	Switched to branch 'login'
+
+				$ ls
+				app.js  Dir1/  Dir2/  index.html  log.txt  login.html				4 files
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (login)
+	$ git checkout master
+	Switched to branch 'master'
+
+				$ ls
+				app.js  Dir1/  Dir2/  index.html  log.txt							3 files
+	
+The 'login.html' appears and disappears in VSC, the Notepad++ Explorer & File Explorer as you bounce back and forth between these branches. Notepad++ hasn't got a file explorer to show you this change
+
+The 'index.html' file, open in VSC, its content changes automatically every time I bounce back & forth 
+- the extra line of code appearing and disappearing everytime I change the branch in Git Bash
+
+The 'index.html' file, open in Notepad++, its content does not change automatically every time I bounce back & forth. As you highlight the file it will tell you that 'This file has been modified by another program. Do you want to reload it? [ Yes / No ]. You should always say 'Yes' because if you say 'No' the unchanged file stays in the browser and if I weren't paying attention I could overwrite the file accidentially.
+
+So - if using Git Bash - I could use Notepad++, but it would be better to use VSC.
+
+Use Notepad++ for the Notes files - handy to be able to tab to the open file.
+
+Lesson Learned: Use VSC with Git Bash
+
+========================================================================
+previous configuration commands - saved to the config
+
+		Lenovo@DESKTOP-7A3RUH0 MINGW64 ~
+		$ git config --global user.name "Paul Mc Nicholas"                             add a user name
+
+		Lenovo@DESKTOP-7A3RUH0 MINGW64 ~
+		$ git config --global user.email "mcnicholaspaul461@gmail.com"                 add an email address
+
+		Lenovo@DESKTOP-7A3RUH0 MINGW64 ~
+		$ git config --global core.editor notepad                              			instead of VI default editor
+
+		$ git config --list							shows current config
+
+========================================================================
+Merging Branches
+----------------
+
+	$ git checkout master							be in master to do a merge
+
+	$ git merge login								Brad's required 'comment'
+
+	
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git merge login
+	Updating fb81bb2..27735ea
+	Fast-forward
+	 index.html |  2 ++
+	 login.html | 12 ++++++++++++
+	 2 files changed, 14 insertions(+)
+	 create mode 100644 login.html
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+
+There's a lot more to branching and merging but Brad is keeping this simple.
+i.e. if you're working on your own projects you won't be using branches
+
+
+===========================================================================
+Remote Repository
+=================
+
+github.com	--> created a new sign in and verified email address
+
+	Username:		pmcnich
+	email:			mcnicholaspaul461@gmail
+	password:		Github2020
+	
+Signed in --> Top Right + --> Create New --> New Repository 
+
+	Owner = 			pmcnich / 
+	Repository Name: 	BradsCrashCourseExample
+	Description:		Example following Brad Traversy's Github Crash Course
+	Public/Private		Private may cost money, so we go with public
+	Readme File			Option to include a readme file, we leave unchecked
+
+	[ Create Repository ]
+
+--------------------------------------------------------------------------------------
+Github Web Page - Information
+-----------------------------
+Quick setup — if you’ve done this kind of thing before
+
+https://github.com/pmcnich/BradsCrashCourseExample.git
+
+Get started by creating a new file or uploading an existing file. We recommend every repository include a README, LICENSE, and .gitignore.
+
+…or create a new repository on the command line
+------------------------------------------------
+echo "# BradsCrashCourseExample" >> README.md					.md = mark down formatting
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/pmcnich/BradsCrashCourseExample.git
+git push -u origin master
+                
+…or push an existing repository from the command line
+-----------------------------------------------------
+git remote add origin https://github.com/pmcnich/BradsCrashCourseExample.git
+git push -u origin master
+…or import code from another repository
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+---------------------------------------------------------------------------------------
+Terminal - Git Bash
+-------------------
+	$ git remote												list repositories
+																of which we have none.
+																
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git remote
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$
+														
+copy the provided - add origin line above
+	
+$ git remote add origin https://github.com/pmcnich/BradsCrashCourseExample.git
+	
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git remote add origin https://github.com/pmcnich/BradsCrashCourseExample.git
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git remote
+	origin
+
+$ git push -u origin master	 			- it prompts for a Github Login & Password
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git push -u origin master
+	Enumerating objects: 16, done.
+	Counting objects: 100% (16/16), done.
+	Delta compression using up to 4 threads
+	Compressing objects: 100% (11/11), done.
+	Writing objects: 100% (16/16), 1.57 KiB | 320.00 KiB/s, done.
+	Total 16 (delta 2), reused 0 (delta 0)
+	remote: Resolving deltas: 100% (2/2), done.
+	To https://github.com/pmcnich/BradsCrashCourseExample.git
+	 * [new branch]      master -> master
+	Branch 'master' set up to track remote branch 'master' from 'origin'.
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$
+----------------------------------------------------------------------------------
+Github Website - logged in.
+---------------------------
+Refresh to see the new files
+
+It recommends you create a README file, so thats what we do
+
+---------------------------------------------------------------------------------------
+Terminal - Git Bash
+-------------------
+
+Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+$ touch README.md
+
+Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+$ git add .
+
+Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+$ git commit -m 'Creating & Adding the README.md file'
+[master eefe336] Creating & Adding the README.md file
+ 1 file changed, 4 insertions(+)
+ create mode 100644 README.md										File in Staging Area
+
+Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+$ git push															push to Repository
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 440 bytes | 440.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/pmcnich/BradsCrashCourseExample.git
+   27735ea..eefe336  master -> master
+
+Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+$
+
+----------------------------------------------------------------------------------
+Github Website
+---------------------------
+Refresh to see the new README.md file, whose contents are displayed automatically
+
+I didn't like the way the file looked so I modified it again and had to repeat the process
+
+---------------------------------------------------------------------------------------
+Terminal - Git Bash
+-------------------
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git add .
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git commit -m 'Updating the README.md file'
+	[master 1ea525d] Updating the README.md file
+	 1 file changed, 2 insertions(+), 2 deletions(-)
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git push
+	Enumerating objects: 5, done.
+	Counting objects: 100% (5/5), done.
+	Delta compression using up to 4 threads
+	Compressing objects: 100% (3/3), done.
+	Writing objects: 100% (3/3), 399 bytes | 399.00 KiB/s, done.
+	Total 3 (delta 1), reused 0 (delta 0)
+	remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+	To https://github.com/pmcnich/BradsCrashCourseExample.git
+	   eefe336..1ea525d  master -> master
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+
+
+---------------------------------------------------------------------------------
+Cloning or Downloading
+----------------------
+This is what I've always used to download code from other Github projects
+
+
+If you have multiple developers you may need to update at time to the latest version
+
+	$ git pull
+	
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$ git pull
+	Already up to date.
+
+	Lenovo@DESKTOP-7A3RUH0 MINGW64 ~/Desktop/GitTestFolder (master)
+	$
+	
+
+So that's it!!!!!!!!!!!!!!!!!!!!!!!!
+
+=====================================================================================
+
